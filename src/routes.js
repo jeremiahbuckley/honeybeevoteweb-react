@@ -20,6 +20,9 @@ const routes = [
   require('./routes/contact'),
   require('./routes/login'),
   require('./routes/register'),
+  require('./routes/electionsList'),
+  require('./routes/votersList'),
+  require('./routes/candidatesList'),
 ];
 
 const router = new Router(on => {
