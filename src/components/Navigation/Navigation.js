@@ -14,8 +14,12 @@ import s from './Navigation.scss';
 import Link from '../Link';
 
 function Navigation({ className }) {
+  console.log("jbdontforget: Rendering navigation!")
   return (
     <div className={cx(s.root, className)} role="navigation">
+      <Link className={s.link} to="/electionsList">Elections</Link>
+      <Link className={s.link} to="/candidatesList">Candidates</Link>
+      <Link className={s.link} to="/votersList">Voters</Link>
       <Link className={s.link} to="/about">About</Link>
       <Link className={s.link} to="/contact">Contact</Link>
       <span className={s.spacer}> | </span>
