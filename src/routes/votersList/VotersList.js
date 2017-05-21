@@ -7,15 +7,36 @@ import VoterAdd from '../VoterAdd.js';
 class VotersList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { voters: [{_id: 1, key: 1, name: 'Who Me', password: '11111'}, {_id: 354, key: 354,name: 'Sally Stex', password: '22222'}]};
+    this.state = { showAddPanel: false, voters: [{_id: 1, key: 1, name: 'Who Me', password: '11111'}, {_id: 354, key: 354,name: 'Sally Stex', password: '22222'}]};
+
+    this.showAddPanel = this.showAddPanel.bind(this);
+    this.addVoterOnSave = this.addVoterOnSave.bind(this);
+    this.addVoterOnCancel = this.addVoterOnCancel.bind(this);
+    this.onVoterDelete = this.onVoterDelete.bind(this);
+  }
+
+  showAddPanel(e) {
+    this.setState(prevState => ({
+      showAddPanel: true
+    }));
   }
 
   addVoterOnSave(voterData) {
-    console.log("add voter " + voterData);
+    console.log("add voter " + JSON.stringify(voterData));
+    this.setState(prevState => ({
+      showAddPanel: false
+    }));
   }
 
   addVoterOnCancel() {
     console.log("cancelling add voter");
+    this.setState(prevState => ({
+      showAddPanel: false
+    }));
+  }
+
+  onVoterDelete(id) {
+    console.log("delete voter clicked : " + id);
   }
 
   render() {
@@ -30,28 +51,30 @@ class VotersList extends React.Component {
               <div className="col-xs-2">Password</div>
           </div>
           {this.state.voters.map((voter) => 
-            <div className="row">
+            <div className="row" key={voter._id}>
             <div className="col-xs-3">{voter._id}</div>
                 <div className="col-xs-3">{voter.name}</div>
                 <div className="col-xs-2">{voter.password}</div>
                 <div className="col-xs-1">
-                    <button ng-click="$ctrl.delete(voter._id)">
+                    <button onClick={() => this.onVoterDelete(voter._id)}>
                         Delete
                     </button>
                 </div>
             </div>
           )}
           <div className="row">
-              <button ng-click="$ctrl.addVoter()">
+              <button onClick={this.showAddPanel}>
                   Add Voter
               </button>
           </div>
-          <div ng-show="$ctrl.showAddPanel">
+          { this.state.showAddPanel ?
               <VoterAdd onSave={this.addVoterOnSave}
                 onCancel={this.addVoterOnCancel}
               >
               </VoterAdd>
-          </div>
+              : 
+              null
+          }
       </div>
     );    
   }
