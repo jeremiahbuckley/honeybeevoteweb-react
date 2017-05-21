@@ -3,8 +3,6 @@ import React, { PropTypes } from 'react';
 class VoterAdd extends React.Component {
     constructor(props) {
       super(props);
-      console.log("start");
-      console.log(props);
 
       this.onSave = this.onSave.bind(this);
       this.onCancel = this.onCancel.bind(this);

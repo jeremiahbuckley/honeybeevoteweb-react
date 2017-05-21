@@ -39,7 +39,7 @@ async function start() {
       }
 
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
-      config.plugins.push(new webpack.NoErrorsPlugin());
+      config.plugins.push(new webpack.NoEmitOnErrorsPlugin());
       config
         .module
         .loaders
