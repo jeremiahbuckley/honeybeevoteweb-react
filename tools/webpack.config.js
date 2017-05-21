@@ -41,7 +41,6 @@ const config = {
   },
 
   cache: DEBUG,
-  // debug: DEBUG,
 
   stats: {
     colors: true,
@@ -65,7 +64,8 @@ const config = {
             require('precss')(),
             require('autoprefixer')({ browsers: AUTOPREFIXER_BROWSERS }),
           ];
-        }
+        },
+        debug: DEBUG
       }
     })
   ],
