@@ -8,6 +8,7 @@ class CandidateDetail extends React.Component {
       this.state = {};
 
       this.delete = this.delete.bind(this);
+      this.candidateVoteOnSave = this.candidateVoteOnSave.bind(this);
     }
 
     delete(id) {
@@ -17,7 +18,7 @@ class CandidateDetail extends React.Component {
     candidateVoteOnSave(voteData) {
       console.log("trying to save date: " + voteData);
       console.log("trying to save date: " + JSON.stringify(voteData));
-      this.props.onSave();
+      this.props.onSave(voteData);
     }
 
     render() {

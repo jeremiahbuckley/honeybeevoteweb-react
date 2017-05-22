@@ -44,6 +44,11 @@ class ElectionsList extends React.Component {
     this.saveCandidatesSelection = this.saveCandidatesSelection.bind(this);
   }
 
+  delete(id) {
+    // call *should* be this.delete(id)
+    console.log("deleting election");
+  }
+
   addElection(e) {
     this.setState({ showAddPanel: true });
   }
@@ -59,13 +64,8 @@ class ElectionsList extends React.Component {
     this.setState({ showAddPanel: false });
   }
 
-  delete(id) {
-    // call *should* be this.delete(id)
-    console.log("deleting election");
-  }
-
   saveCandidatesSelection(candidateIdsList) {
-    console.log("saving candidates selection: " + candidateIdsList);
+    console.log("saving candidates selection: " + JSON.stringify(candidateIdsList));
   }
 
   render() {

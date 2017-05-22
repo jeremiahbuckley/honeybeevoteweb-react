@@ -9,13 +9,17 @@ class VotersList extends React.Component {
     super(props);
     this.state = { showAddPanel: false, voters: [{_id: 1, key: 1, name: 'Who Me', password: '11111'}, {_id: 354, key: 354,name: 'Sally Stex', password: '22222'}]};
 
-    this.showAddPanel = this.showAddPanel.bind(this);
+    this.addVoter = this.addVoter.bind(this);
     this.addVoterOnSave = this.addVoterOnSave.bind(this);
     this.addVoterOnCancel = this.addVoterOnCancel.bind(this);
-    this.onVoterDelete = this.onVoterDelete.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
-  showAddPanel(e) {
+  delete(id) {
+    console.log("delete voter clicked : " + id);
+  }
+
+  addVoter(e) {
     this.setState(prevState => ({
       showAddPanel: true
     }));
@@ -35,10 +39,6 @@ class VotersList extends React.Component {
     }));
   }
 
-  onVoterDelete(id) {
-    console.log("delete voter clicked : " + id);
-  }
-
   render() {
     return (
       <div className="container">
@@ -56,14 +56,14 @@ class VotersList extends React.Component {
                 <div className="col-xs-3">{voter.name}</div>
                 <div className="col-xs-2">{voter.password}</div>
                 <div className="col-xs-1">
-                    <button onClick={() => this.onVoterDelete(voter._id)}>
+                    <button onClick={() => this.delete(voter._id)}>
                         Delete
                     </button>
                 </div>
             </div>
           )}
           <div className="row">
-              <button onClick={this.showAddPanel}>
+              <button onClick={this.addVoter}>
                   Add Voter
               </button>
           </div>

@@ -57,10 +57,18 @@ class CandidatesList extends React.Component {
         });
   }
 
+  delete(id) {
+    console.log("deleting candidate: " + id);
+  }
+
   addCandidateShow(e) {
     this.setState(prevState => ({
       showAddPanel: true
     }));
+  }
+
+  addCandidateElections() {
+    return !this.props.electionId;
   }
 
   addCandidateOnSave(candidateData) {
@@ -77,16 +85,8 @@ class CandidatesList extends React.Component {
     }))
   }
 
-  addCandidateElections() {
-    return !this.props.electionId;
-  }
-
   saveVote(voteData) {
     console.log("saving vote: " + JSON.stringify(voteData));
-  }
-
-  delete(id) {
-    console.log("deleting candidate: " + id);
   }
 
   render() {
@@ -102,7 +102,7 @@ class CandidatesList extends React.Component {
         {this.state.candidates.map(cd => 
           <CandidateDetail {...{key: cd.key, candidate: cd, 
             electionId: cd.electionId, onDelete: this.delete,
-            onVoteSave: this.saveVote, voters: this.state.voters}}
+            onSave: this.saveVote, voters: this.state.voters}}
           >
           </CandidateDetail>
         )}

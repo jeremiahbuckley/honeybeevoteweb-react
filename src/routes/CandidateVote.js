@@ -5,17 +5,17 @@ class CandidateVote extends React.Component {
     super(props);
     this.state = {selectedVoter: '', value:''}
 
-    this.onSave = this.onSave.bind(this);
-    this.onCancel = this.onCancel.bind(this);
+    this.save = this.save.bind(this);
+    this.cancel = this.cancel.bind(this);
     this.onValueChanged = this.onValueChanged.bind(this);
     this.onSelectedVoterChanged = this.onSelectedVoterChanged.bind(this);
   }
 
-  onSave() {
+  save() {
     this.props.onSave(this.state);
   }
 
-  onCancel() {
+  cancel() {
     this.props.onCancel();
   }
 
@@ -34,7 +34,7 @@ class CandidateVote extends React.Component {
           <label className="col-xs-1">Vote as:</label>
             <select name="voterSelect" className="col-xs-3" value={this.state.selectedVoter} onChange={this.onSelectedVoterChanged} >
               { this.props.voters.map( vtr => {
-                return <option value={vtr._id}>{vtr.name}</option>
+                return <option key={vtr._id} value={vtr._id}>{vtr.name}</option>
               })}
             </select>
           <label className="col-xs-1">Value</label>
@@ -42,12 +42,12 @@ class CandidateVote extends React.Component {
         </div>
         <div className="row">
           <div className="col-xs-1">
-            <button onClick={this.onSave}>
+            <button onClick={this.save}>
               Save
             </button>
           </div>
           <div className="col-xs-1">
-            <button onClick={this.onCancel}>
+            <button onClick={this.cancel}>
               Cancel
             </button>
           </div>

@@ -5,19 +5,19 @@ class CandidateAdd extends React.Component {
       super(props);
       console.log(JSON.stringify(props));
 
-      this.state = { name: '', selectedElection: null }
+      this.state = { name: '', selectedElection: '' } // jbdontforget - selectedElection might be expected to be an object...confirm
 
-      this.onSave = this.onSave.bind(this);
-      this.onCancel = this.onCancel.bind(this);
+      this.save = this.save.bind(this);
+      this.cancel = this.cancel.bind(this);
       this.onNameChange = this.onNameChange.bind(this);
       this.onElectionSelectionChanged = this.onElectionSelectionChanged.bind(this);
     }
 
-    onSave() {
+    save() {
       this.props.onSave(this.state);
     }
 
-    onCancel() {
+    cancel() {
       this.props.onCancel();
     }
 
@@ -38,7 +38,7 @@ class CandidateAdd extends React.Component {
                   <label className="col-xs-1">In:</label>
                     <select value={this.state.selectedElection} onChange={this.onElectionSelectionChanged} name="electionSelect" className="col-xs-3" >
                       { this.props.elections.map( el => {
-                        return <option value={el._id}>{el.name}</option>
+                        return <option key={el._id} value={el._id}>{el.name}</option>
                       })}
                     </select>
                 </div>
@@ -51,12 +51,12 @@ class CandidateAdd extends React.Component {
             <div className="row">
               <div className="col-xs-1">&nbsp;</div>
               <div className="col-xs-1">
-                <button onClick={this.onSave}>
+                <button onClick={this.save}>
                   Save
                 </button>
               </div>
               <div className="col-xs-1">
-                <button onClick={this.onCancel}>
+                <button onClick={this.cancel}>
                   Cancel
                 </button>
               </div>

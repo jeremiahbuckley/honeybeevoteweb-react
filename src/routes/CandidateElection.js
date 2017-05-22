@@ -16,14 +16,15 @@ class CandidateElection extends React.Component {
     this.setState({ showVotePanel: true });
   }
 
-  candidateVoteOnSave(candidateVoteData) {
-    console.log("add candidateVote " + JSON.stringify(candidateVoteData));
-    this.setState({showVotePanel: false})
-  }
-
   candidateVoteOnCancel() {
     console.log("cancelling add candidateVote");
     this.setState({showVotePanel: false})
+  }
+
+  candidateVoteOnSave(candidateVoteData) {
+    console.log("add candidateVote " + JSON.stringify(candidateVoteData));
+    this.props.onVoteSave(candidateVoteData);
+    this.setState({showVotePanel: false});
   }
 
   render() {
