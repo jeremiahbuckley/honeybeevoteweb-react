@@ -3,33 +3,50 @@ import React, { PropTypes } from 'react';
 class CandidateAdd extends React.Component {
     constructor(props) {
       super(props);
-      this.state = props;
+      console.log(JSON.stringify(props));
+
+      this.state = { name: '', selectedElection: null }
 
       this.onSave = this.onSave.bind(this);
       this.onCancel = this.onCancel.bind(this);
+      this.onNameChange = this.onNameChange.bind(this);
+      this.onElectionSelectionChanged = this.onElectionSelectionChanged.bind(this);
     }
 
-    onSave(e) {
-      this.props.onSave(e);
+    onSave() {
+      this.props.onSave(this.state);
     }
 
-    onCancel(e) {
-      this.props.onCancel(e);
+    onCancel() {
+      this.props.onCancel();
+    }
+
+    onNameChange(event) {
+      this.setState({name: event.target.value });
+    }
+
+    onElectionSelectionChanged(event) {
+      this.setState({selectedElection: event.target.value})
     }
     
     render() {
         return (
           <div>
             <div className="row">
-              <div ng-show="$ctrl.showElectionSelect">
-                <label className="col-xs-1">In:</label>
-                  <select name="electionSelect" className="col-xs-3" 
-                    ng-options="election.name for election in $ctrl.elections track by election._id"
-                    ng-model="$ctrl.selectedElection">
-                  </select>     
-              </div>
+              { this.props.showElectionSelect ?
+                <div>
+                  <label className="col-xs-1">In:</label>
+                    <select value={this.state.selectedElection} onChange={this.onElectionSelectionChanged} name="electionSelect" className="col-xs-3" >
+                      { this.props.elections.map( el => {
+                        return <option value={el._id}>{el.name}</option>
+                      })}
+                    </select>
+                </div>
+                :
+                null
+              }
               <label className="col-xs-3">Candidate name:</label>
-              <input className="col-xs-4" ng-model="$ctrl.name" type="text" required />
+              <input className="col-xs-4" value={this.state.name} onChange={this.onNameChange} type="text" required />
             </div>
             <div className="row">
               <div className="col-xs-1">&nbsp;</div>
