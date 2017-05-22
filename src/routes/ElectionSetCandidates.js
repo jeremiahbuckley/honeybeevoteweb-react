@@ -3,20 +3,49 @@ import React, { PropTypes } from 'react';
 class ElectionSetCandidates extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { localCandidates: [{_id: 35, selected: true, name: 'Wesley Willenhammer'}, {_id: 55, selected: false, name: 'Llewellyn Lorde'}]};
 
-      this.onSave = this.onSave.bind(this);
-      this.onCancel = this.onCancel.bind(this);
+      var localCandidates = [];
+      props.candidates.map(candidate => {
+        var lc = {_id: candidate._id, selected: false, name: candidate.name};
+        props.candidateIds.map(id => {
+          if (id === candidate._id) {
+            lc.selected = true;
+          }
+        })
+        localCandidates.push(lc)
+      });
+
+      this.state = {localCandidates: localCandidates }
+
+      this.save = this.save.bind(this);
+      this.cancel = this.cancel.bind(this);
+      this.onCandidateSelectChange = this.onCandidateSelectChange.bind(this);
     }
 
-    onSave(e) {
+    save(e) {
       this.props.onSave(e);
     }
 
-    onCancel(e) {
+    cancel(e) {
       this.props.onCancel(e);
     }
+
+    onCandidateSelectChange() {
+      var id = e.target.name;
+      this.setState(prevState => {
+        var lcs = prevState.localCandidates.map(lc => {
+            return {
+                _id: lc._id,
+                name: lc.name,
+                selected: (lc._id === id ? !lc.selected : lc.selected)
+            };
+        });
+
+        return { localCandidates: lcs }
+      });
+    }
     
+
     render() {
         return (
           <div>
@@ -35,8 +64,9 @@ class ElectionSetCandidates extends React.Component {
                   <div className="col-xs-4">
                 <input
                   type="checkbox"
-                  value="candidate._id"
-                  ng-model="candidate.selected">
+                  name={candidate._id}
+                  checked={candidate.selected}
+                  onChange={this.onCandidateSelectChange}>
                 </input>
                 {candidate.name}
                 </div>
@@ -47,12 +77,12 @@ class ElectionSetCandidates extends React.Component {
                 <label>&nbsp;</label>
               </div>
               <div className="col-xs-1">
-                <button ng-click="$ctrl.save()">
+                <button onClick={this.save}>
                   Save
                 </button>
               </div>
               <div className="col-xs-1">
-                <button ng-click="$ctrl.cancel()">
+                <button onClick={this.cancel}>
                   Cancel
                 </button>
               </div>
