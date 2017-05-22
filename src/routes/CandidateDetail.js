@@ -4,6 +4,7 @@ import CandidateElection from './CandidateElection.js';
 class CandidateDetail extends React.Component {
     constructor(props) {
       super(props);
+      console.log(JSON.stringify(props))
       this.state = {};
 
       this.delete = this.delete.bind(this);
@@ -23,8 +24,8 @@ class CandidateDetail extends React.Component {
         return (
           <div>
         <div className="row">
-          <div className="col-xs-3">{this.state.candidate._id}</div>
-          <div className="col-xs-3">{this.state.candidate.name}</div>
+          <div className="col-xs-3">{this.props.candidate._id}</div>
+          <div className="col-xs-3">{this.props.candidate.name}</div>
         </div>
         <div className="row">
           <div className="col-xs-1">&nbsp;</div>
@@ -34,7 +35,7 @@ class CandidateDetail extends React.Component {
             </button>
           </div>
         </div>
-        {this.state.candidate.candidateElections.map(ce =>
+        {this.props.candidate.candidateElections.map(ce =>
           <CandidateElection {...{ key: ce.key, candidateElection: ce,  candidateName: this.props.candidate.name,
             electionId: this.props.electionId, voters: this.props.voters,
             onVoteSave: this.candidateVoteOnSave}}></CandidateElection>

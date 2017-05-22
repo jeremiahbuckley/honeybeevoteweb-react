@@ -4,26 +4,26 @@ import s from './CandidatesList.scss';
 import CandidateDetail from '../CandidateDetail.js';
 import CandidateAdd from '../CandidateAdd.js';
 import fetch from 'node-fetch';
-  // const candidates = [
-  //   {_id: 1, key: 1, name:'Hansome Cabbie', candidateElections: [
-  //     {electionId: 7, key: 7, value: 10, votes: [
-  //       {key: 100, voterId: 1, value: 10, startTime: '1/1/2010', endTime: '1/1/2011', endDormancyTime: '1/1/2011', expired: false, voterIsDormant: false }, 
-  //       {key: 101, voterId: 2, value: 12, startTime: '1/2/2010', endTime: '1/2/2011', endDormancyTime: '1/2/2011', expired: true, voterIsDormant: true }
-  //       ]}]},
-  //   {_id: 22, key: 22, name:'Verity Mirstein', candidateElections: [
-  //     {electionId: 7, key: 7, value: 10, votes: [
-  //       {key: 103, voterId: 1, value: 14, startTime: '1/3/2010', endTime: '1/3/2011', endDormancyTime: '1/3/2011', expired: false, voterIsDormant: true }, 
-  //       {key: 104, voterId: 2, value: 16, startTime: '1/4/2010', endTime: '1/4/2011', endDormancyTime: '1/4/2011', expired: false, voterIsDormant: true }
-  //       ]},
-  //     {electionId: 17, key:17, value: 30, votes: [
-  //       {key: 106, voterId: 1, value: 18, startTime: '1/5/2010', endTime: '1/5/2011', endDormancyTime: '1/5/2011', expired: true, voterIsDormant: false }, 
-  //       {key: 107, voterId: 2, value: 20, startTime: '1/6/2010', endTime: '1/6/2011', endDormancyTime: '1/6/2011', expired: true, voterIsDormant: false }
-  //       ]}]},
-  //   {_id: 333, key: 333, name:'Primrose Gord', candidateElections: [
-  //     {electionId: 17, key: 17, value: 30, votes: [
-  //       {key: 109, voterId: 1, value: 22, startTime: '1/7/2010', endTime: '1/7/2011', endDormancyTime: '1/7/2011', expired: true, voterIsDormant: false }, 
-  //       {key: 110, voterId: 2, value: 24, startTime: '1/8/2010', endTime: '1/8/2011', endDormancyTime: '1/8/2011', expired: false, voterIsDormant: true }
-  //       ]}]}];
+  const candidates = [
+    {_id: 1, key: 1, name:'Hansome Cabbie', candidateElections: [
+      {electionId: 7, key: 7, value: 10, votes: [
+        {key: 100, voterId: 1, value: 10, startTime: '1/1/2010', endTime: '1/1/2011', endDormancyTime: '1/1/2011', expired: false, voterIsDormant: false }, 
+        {key: 101, voterId: 2, value: 12, startTime: '1/2/2010', endTime: '1/2/2011', endDormancyTime: '1/2/2011', expired: true, voterIsDormant: true }
+        ]}]},
+    {_id: 22, key: 22, name:'Verity Mirstein', candidateElections: [
+      {electionId: 7, key: 7, value: 10, votes: [
+        {key: 103, voterId: 1, value: 14, startTime: '1/3/2010', endTime: '1/3/2011', endDormancyTime: '1/3/2011', expired: false, voterIsDormant: true }, 
+        {key: 104, voterId: 2, value: 16, startTime: '1/4/2010', endTime: '1/4/2011', endDormancyTime: '1/4/2011', expired: false, voterIsDormant: true }
+        ]},
+      {electionId: 17, key:17, value: 30, votes: [
+        {key: 106, voterId: 1, value: 18, startTime: '1/5/2010', endTime: '1/5/2011', endDormancyTime: '1/5/2011', expired: true, voterIsDormant: false }, 
+        {key: 107, voterId: 2, value: 20, startTime: '1/6/2010', endTime: '1/6/2011', endDormancyTime: '1/6/2011', expired: true, voterIsDormant: false }
+        ]}]},
+    {_id: 333, key: 333, name:'Primrose Gord', candidateElections: [
+      {electionId: 17, key: 17, value: 30, votes: [
+        {key: 109, voterId: 1, value: 22, startTime: '1/7/2010', endTime: '1/7/2011', endDormancyTime: '1/7/2011', expired: true, voterIsDormant: false }, 
+        {key: 110, voterId: 2, value: 24, startTime: '1/8/2010', endTime: '1/8/2011', endDormancyTime: '1/8/2011', expired: false, voterIsDormant: true }
+        ]}]}];
 
   const elections = [
     {_id: 2, key: 2, name:'King me', winThreshhold: 5, voteSustainDuration: 10, voterDormancyDuration: 12, candidateIds: [1, 22], voterIds: [10, 20, 30]},
@@ -36,11 +36,13 @@ class CandidatesList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {showAddPanel: false, candidates: []};
+    this.state = {showAddPanel: false, candidates: candidates, voters: [{_id: 1, key: 1, name: 'Who Me', password: '11111'}, {_id: 354, key: 354,name: 'Sally Stex', password: '22222'}]};
     this.addCandidateShow = this.addCandidateShow.bind(this);
     this.addCandidateOnSave = this.addCandidateOnSave.bind(this);
     this.addCandidateOnCancel = this.addCandidateOnCancel.bind(this);
     this.addCandidateElections = this.addCandidateElections.bind(this);
+    this.saveVote = this.saveVote.bind(this);
+    this.delete = this.delete.bind(this);
 
     const noElectionChoice = {name: "Don't assign election", _id: "-1"};
 
@@ -79,6 +81,14 @@ class CandidatesList extends React.Component {
     return !this.props.electionId;
   }
 
+  saveVote(voteData) {
+    console.log("saving vote: " + JSON.stringify(voteData));
+  }
+
+  delete(id) {
+    console.log("deleting candidate: " + id);
+  }
+
   render() {
     return (
       <div className="container">
@@ -91,8 +101,8 @@ class CandidatesList extends React.Component {
         </div>
         {this.state.candidates.map(cd => 
           <CandidateDetail {...{key: cd.key, candidate: cd, 
-            electionId: "$ctrl.electionId", onDelete: "$ctrl.delete(_id)",
-            onVoteSave: "$ctrl.saveVote(voteData)", voters: "$ctrl.voters"}}
+            electionId: cd.electionId, onDelete: this.delete,
+            onVoteSave: this.saveVote, voters: this.state.voters}}
           >
           </CandidateDetail>
         )}

@@ -8,21 +8,22 @@ class CandidateElection extends React.Component {
     this.state = { showVotePanel: false }
 
     this.showVote = this.showVote.bind(this);
+    this.candidateVoteOnSave = this.candidateVoteOnSave.bind(this);
+    this.candidateVoteOnCancel = this.candidateVoteOnCancel.bind(this);
   }
 
-  showVote(e) {
-    console.log("here")
-    this.setState(prevState => ({
-      showVotePanel: !prevState.showVotePanel
-    }));
+  showVote() {
+    this.setState({ showVotePanel: true });
   }
 
   candidateVoteOnSave(candidateVoteData) {
-    console.log("add candidateVote " + candidateVoteData);
+    console.log("add candidateVote " + JSON.stringify(candidateVoteData));
+    this.setState({showVotePanel: false})
   }
 
   candidateVoteOnCancel() {
     console.log("cancelling add candidateVote");
+    this.setState({showVotePanel: false})
   }
 
   render() {
@@ -47,7 +48,7 @@ class CandidateElection extends React.Component {
               { this.state.showVotePanel ?
                   <div className="row">
                     <div className="col-xs-12" >
-                      <CandidateVote onSave={this.candidateVoteOnSave} onCancel={this.candidateVoteOnCancel} voters="$ctrl.voters">
+                      <CandidateVote onSave={this.candidateVoteOnSave} onCancel={this.candidateVoteOnCancel} voters={this.props.voters}>
                       </CandidateVote>
                     </div>
                   </div>
