@@ -5,17 +5,17 @@ class VoterAdd extends React.Component {
       super(props);
       this.state={name: '', password: ''}
 
-      this.onSave = this.onSave.bind(this);
-      this.onCancel = this.onCancel.bind(this);
+      this.save = this.save.bind(this);
+      this.cancel = this.cancel.bind(this);
       this.onNameChange = this.onNameChange.bind(this);
       this.onPasswordChange = this.onPasswordChange.bind(this);
     }
 
-    onSave(e) {
+    save(e) {
       this.props.onSave({name: this.state.name, password: this.state.password});
     }
 
-    onCancel(e) {
+    cancel(e) {
       this.props.onCancel();
     }
 
@@ -43,12 +43,12 @@ class VoterAdd extends React.Component {
                 &nbsp;  
               </div>
               <div className="col-xs-1">
-                <button onClick={this.onSave}>
+                <button onClick={this.save}>
                   Save
                 </button>
               </div>
               <div className="col-xs-1">
-                <button onClick={this.onCancel}>
+                <button onClick={this.cancel}>
                   Cancel
                 </button>
               </div>

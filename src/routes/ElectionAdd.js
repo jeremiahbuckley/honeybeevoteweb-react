@@ -5,20 +5,20 @@ class ElectionAdd extends React.Component {
       super(props);
       this.state = { name: '', winThreshhold: 10, voteSustainDuration: 15, voterDormancyDuration: 12};
 
-      this.onSave = this.onSave.bind(this);
-      this.onCancel = this.onCancel.bind(this);
+      this.save = this.save.bind(this);
+      this.cancel = this.cancel.bind(this);
       this.onNameChange = this.onNameChange.bind(this);
       this.onWinThreshholdChange = this.onWinThreshholdChange.bind(this);
       this.onVoteSustainDurationChange = this.onVoteSustainDurationChange.bind(this);
       this.onVoterDormancyDurationChange = this.onVoterDormancyDurationChange.bind(this);
     }
 
-    onSave(e) {
+    save() {
       this.props.onSave(this.state);
     }
 
-    onCancel(e) {
-      this.props.onCancel(e);
+    cancel() {
+      this.props.onCancel();
     }
 
     onNameChange(event) {
@@ -57,12 +57,12 @@ class ElectionAdd extends React.Component {
                 <label>&nbsp;</label>
               </div>
               <div className="col-xs-1">
-                <button onClick={this.onSave}>
+                <button onClick={this.save}>
                   Save
                 </button>
               </div>
               <div className="col-xs-1">
-                <button onClick={this.onCancel}>
+                <button onClick={this.cancel}>
                   Cancel
                 </button>
               </div>

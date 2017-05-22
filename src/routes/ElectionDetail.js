@@ -8,10 +8,15 @@ class ElectionDetail extends React.Component {
 
       this.showSetCandidates = this.showSetCandidates.bind(this);
       this.showCandidatesList = this.showCandidatesList.bind(this);
-      this.deleteElection = this.deleteElection.bind(this);
+      this.delete = this.delete.bind(this);
       this.closeCandidatesList = this.closeCandidatesList.bind(this);
       this.candidatesSelectOnSave = this.candidatesSelectOnSave.bind(this);
       this.candidatesSelectOnCancel = this.candidatesSelectOnCancel.bind(this);
+    }
+
+    delete(id) {
+      console.log("deleting election: " + id);
+      this.props.onDelete(id);
     }
 
     showSetCandidates() {
@@ -22,23 +27,20 @@ class ElectionDetail extends React.Component {
       this.setState({showCandidatesListPanel: true });
     }
 
-    deleteElection(id) {
-      console.log("deleting election: " + id);
-    }
-
-    closeCandidatesList() {
-      this.setState({showCandidatesListPanel: false})
-    }
-
-    candidatesSelectOnSave(candidateIdsList) {
-      console.log("saving candidate selections: " + candidateIdsList);
-      this.setState({showCandidatesSelectPanel: false})
-    }
-
     candidatesSelectOnCancel() {
       this.setState({showCandidatesSelectPanel: false})
     }
     
+    closeCandidatesList() {
+      this.setState({showCandidatesListPanel: false})
+    }
+
+    candidatesSelectOnSave(cIdsList) {
+      console.log("saving candidate selections: " + JSON.stringify(cIdsList));
+      this.props.onCandidatesSelectSave({id: this.props.election._id, list: cIdsList})
+      this.setState({showCandidatesSelectPanel: false})
+    }
+
     render() {
         return (
             <div>
@@ -61,7 +63,7 @@ class ElectionDetail extends React.Component {
                       </button>
                   </div>
                   <div className="col-xs-1">
-                      <button onClick={() => this.deleteElection(this.props.election._id)}>
+                      <button onClick={() => this.delete(this.props.election._id)}>
                           Delete
                       </button>
                   </div>
